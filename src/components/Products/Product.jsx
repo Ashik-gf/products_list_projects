@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { CartContext } from '../../contexts';
 
 const Product = ({ product }) => {
     const { id, title, price, category, image } = product;
+    const [add, setAdd] = useState(false);
+    const { cart, dispatch } = useContext(CartContext);
+    // console.log(cart, dispatch);
+
+    const handleAddToCart = (product) => {
+        console.log(product);
+        dispatch({ type: 'ADD_TO_CART', payload: product });
+        setAdd(!add)
+    };
+
+    const handleRemoveFromCart = (productId) => {
+        dispatch({ type: 'REMOVE_FROM_CART', payload: { id: productId } });
+        setAdd(!add)
+    };
     return (
         <div className="relative">
             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none lg:h-80">
@@ -17,16 +32,36 @@ const Product = ({ product }) => {
             </div>
 
             <div
-                className="cursor-pointer rounded-md bg-white text-[0.8125rem] font-medium leading-5 text-slate-700 ring-1 ring-slate-700/10  hover:ring-1 ring-slate-700/10 hover:bg-slate-50 hover:text-slate-900 items-center text-center mb-3 mx-3 flex-1">
-                <div className="flex px-3 py-2 justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                        stroke="currentColor" className="mr-2.5 h-5 w-5 flex-none stroke-slate-400">
-                        <path strokeLinecap="round" trokelinejoin="round"
-                            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                    </svg>
+                className="cursor-pointer rounded-md bg-white text-[0.8125rem] font-medium leading-5 text-slate-700 ring-1 ring-slate-700/10  hover:ring-1 hover:bg-slate-50 hover:text-slate-900 items-center text-center mb-3 mx-3 flex-1">
 
-                    Add To Cart
-                </div>
+                {
+                    add ? <button
+                        onClick={() => handleRemoveFromCart(id)}
+                        className="flex px-3 py-2 justify-center">
+                        <svg
+
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                            stroke="currentColor" className={`mr-2.5 h-5 w-5 flex-none stroke-red-400`}>
+                            <path strokeLinecap="round" trokelinejoin="round"
+                                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+                        Remove to Cart
+                    </button> : <button
+                        onClick={() => handleAddToCart(product)}
+                        className="flex px-3 py-2 justify-center">
+                        <svg
+
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+                            stroke="currentColor" className={`mr-2.5 h-5 w-5 flex-none stroke-slate-400`}>
+                            <path strokeLinecap="round" trokelinejoin="round"
+                                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+                        Add to Cart
+
+                    </button>
+                }
+
+
             </div>
         </div>
     )
