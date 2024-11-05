@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { ProductsContext, SearchContext } from '../../contexts';
+import Error from '../../utils/Error';
 import Loading from '../../utils/Loading';
+import NoDataFund from '../../utils/NoDataFund';
 import Product from './Product';
 
 const ProductsList = ({ sortState, categoryData, categorySelected }) => {
@@ -13,14 +15,6 @@ const ProductsList = ({ sortState, categoryData, categorySelected }) => {
         const priceB = b.price;
         return sortState === 'asc' ? priceA - priceB : priceB - priceA;
     })
-    // searched products
-    // const searchedTasks = search
-    //     ? sortProducts.filter((task) =>
-    //         task.title.toLowerCase().includes(search.toLowerCase())
-    //     )
-    //     : sortProducts;
-
-    // end Search products
     if (categoryData.length === 0 || categorySelected === null) {
         sortProducts = products.filter((pro) => pro.title.toLowerCase().includes(search.toLowerCase())).sort((a, b) => {
             const priceA = a.price;
@@ -31,13 +25,12 @@ const ProductsList = ({ sortState, categoryData, categorySelected }) => {
         sortProducts = filterProducts
     }
 
-
     let content = null;
     if (loading) {
         content = <Loading />
     }
     if (!loading && error) {
-        content = <Error error={error} />
+        content = <Error error={error.message} />
     }
     if (!loading && !error && products.length > 0) {
         content = <div className="bg-white">
@@ -51,8 +44,13 @@ const ProductsList = ({ sortState, categoryData, categorySelected }) => {
         </div>
     }
     return (
-        <div>
-            {content}
+        <div className='p-4'>
+            {
+                sortProducts.length !== 0 ? <div>
+                    {content}
+                </div> : <NoDataFund />
+            }
+
         </div>
     )
 }

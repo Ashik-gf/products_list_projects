@@ -1,4 +1,5 @@
 import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 import Home from "./pages/Home/Home"
 import { CartProvider } from "./provider/CartProvider"
 import CategoriesProvider from "./provider/CategoriesProvider"
@@ -14,7 +15,19 @@ function App() {
         <CategoriesProvider>
           <SearchProvider>
             <CartProvider>
-              <ToastContainer />
+              <ToastContainer
+                position="top-center"
+                autoClose={400}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+              // transition= Bounce,
+              />
               <Home />
             </CartProvider>
           </SearchProvider>

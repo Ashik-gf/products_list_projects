@@ -20,7 +20,8 @@ const useProducts = () => {
                 const data = await response.json();
                 setProducts(data);
             } catch (error) {
-                setError(error.message);
+                setError(error);
+                console.log(error);
             } finally {
                 setLoading(false);
             }

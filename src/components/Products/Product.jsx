@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 import { CartContext } from '../../contexts';
 
 const Product = ({ product }) => {
@@ -10,11 +11,13 @@ const Product = ({ product }) => {
     const handleAddToCart = (product) => {
         console.log(product);
         dispatch({ type: 'ADD_TO_CART', payload: product });
+        toast.success(`Add ${product.title} Successfully`)
         setAdd(!add)
     };
 
     const handleRemoveFromCart = (productId) => {
         dispatch({ type: 'REMOVE_FROM_CART', payload: { id: productId } });
+        toast.success(`Remove ${product.title} from Cart Successfully`)
         setAdd(!add)
     };
     return (
@@ -50,7 +53,6 @@ const Product = ({ product }) => {
                         onClick={() => handleAddToCart(product)}
                         className="flex px-3 py-2 justify-center">
                         <svg
-
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                             stroke="currentColor" className={`mr-2.5 h-5 w-5 flex-none stroke-slate-400`}>
                             <path strokeLinecap="round" trokelinejoin="round"
